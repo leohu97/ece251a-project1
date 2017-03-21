@@ -1,0 +1,94 @@
+C51 COMPILER V9.53.0.0   EFM8BB31F64G_B_QFN32_MAIN                                         03/20/2017 18:21:43 PAGE 1   
+
+
+C51 COMPILER V9.53.0.0, COMPILATION OF MODULE EFM8BB31F64G_B_QFN32_MAIN
+OBJECT MODULE PLACED IN .\src/EFM8BB31F64G-B-QFN32_main.OBJ
+COMPILER INVOKED BY: Z:\Applications\Simplicity Studio.app\Contents\Eclipse\developer\toolchains\keil_8051\9.53\BIN\C51.
+                    -exe /Users/liaohu/SimplicityStudio/v4_workspace/EFM8BB31F64G-B-QFN32/src/EFM8BB31F64G-B-QFN32_main.c OMF2 SMALL DEBUG OB
+                    -JECTEXTEND ROM(LARGE) WARNINGLEVEL(2) FLOATFUZZY(3) OPTIMIZE(8,SPEED) DEFINE(DEBUG=1) INTVECTOR(0X0000) INTPROMOTE INCDI
+                    -R(/Users/liaohu/SimplicityStudio/v4_workspace/EFM8BB31F64G-B-QFN32/inc;/Applications/Simplicity Studio.app/Contents/Ecli
+                    -pse/developer/sdks/8051/v4.0.3//Device/shared/si8051base;/Applications/Simplicity Studio.app/Contents/Eclipse/developer/
+                    -sdks/8051/v4.0.3//Device/EFM8BB3/inc) PRINT(.\src/EFM8BB31F64G-B-QFN32_main.lst) COND PAGEWIDTH(120) PAGELENGTH(65) OBJE
+                    -CT(.\src/EFM8BB31F64G-B-QFN32_main.OBJ)
+
+line level    source
+
+   1          //-----------------------------------------------------------------------------
+   2          // Includes
+   3          //-----------------------------------------------------------------------------
+   4          #include <SI_EFM8BB3_Register_Enums.h>                  // SFR declarations
+   5          #include "InitDevice.h"
+   6          
+   7          // $[Generated Includes]
+   8          // [Generated Includes]$
+   9          SI_SBIT(LED0, SFR_P1, 4);
+  10          SI_SBIT(LED1, SFR_P1, 5);
+  11          SI_SBIT(LED2, SFR_P1, 6);
+  12          SI_SBIT(SW0, SFR_P0, 2);
+  13          SI_SBIT(SW1, SFR_P0, 3);
+  14          
+  15          //#define DISP_BC_DRIVEN   0             // 0 = Board Controller drives display
+  16          //#define DISP_EFM8_DRIVEN 1             // 1 = EFM8 drives display
+  17          //-----------------------------------------------------------------------------
+  18          // main() Routine
+  19          // ----------------------------------------------------------------------------
+  20          void main(void) {
+  21   1              // Call hardware initialization routine
+  22   1      
+  23   1              enter_DefaultMode_from_RESET();
+  24   1      
+  25   1      
+  26   1              while(1) //infinite loop
+  27   1                        {
+  28   2                                //LED0=1; //Green light on 0
+  29   2                                //LED1=1; //Blue light on 0
+  30   2                                //LED2=1; //Red light on 0
+  31   2                                long lkj = 0;
+  32   2                                double jkl = 150;
+  33   2      
+  34   2      while(1){
+  35   3                                //LED0=1;
+  36   3                                //LED1=1;
+  37   3                                if(SW0==0){
+  38   4                                                jkl=jkl+10;
+  39   4                                                //LED1=0;
+  40   4                                        }
+  41   3                                if(SW1==0){
+  42   4                                                jkl=jkl-10;
+  43   4                                                //LED2=0;
+  44   4                                        }
+  45   3                                for(lkj=0;lkj<jkl;lkj++){
+  46   4      
+  47   4                                }
+  48   3                                LED0=0;
+  49   3                                for(lkj=0;lkj<jkl;lkj++){
+  50   4      
+C51 COMPILER V9.53.0.0   EFM8BB31F64G_B_QFN32_MAIN                                         03/20/2017 18:21:43 PAGE 2   
+
+  51   4                                }
+  52   3                                LED0=1;
+  53   3      
+  54   3      
+  55   3                        }}
+  56   1              }
+  57          // $[Generated Run-time code]
+  58          // [Generated Run-time code]$
+  59          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    213    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       8
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
