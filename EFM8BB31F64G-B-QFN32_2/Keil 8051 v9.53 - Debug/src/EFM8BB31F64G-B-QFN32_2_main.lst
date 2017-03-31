@@ -1,0 +1,101 @@
+C51 COMPILER V9.53.0.0   EFM8BB31F64G_B_QFN32_2_MAIN                                       03/27/2017 23:40:43 PAGE 1   
+
+
+C51 COMPILER V9.53.0.0, COMPILATION OF MODULE EFM8BB31F64G_B_QFN32_2_MAIN
+OBJECT MODULE PLACED IN .\src/EFM8BB31F64G-B-QFN32_2_main.OBJ
+COMPILER INVOKED BY: Z:\Applications\Simplicity Studio.app\Contents\Eclipse\developer\toolchains\keil_8051\9.53\BIN\C51.
+                    -exe /Users/liaohu/SimplicityStudio/v4_workspace/EFM8BB31F64G-B-QFN32_2/src/EFM8BB31F64G-B-QFN32_2_main.c OMF2 SMALL DEBU
+                    -G OBJECTEXTEND ROM(LARGE) WARNINGLEVEL(2) FLOATFUZZY(3) OPTIMIZE(8,SPEED) DEFINE(DEBUG=1) INTVECTOR(0X0000) INTPROMOTE I
+                    -NCDIR(/Users/liaohu/SimplicityStudio/v4_workspace/EFM8BB31F64G-B-QFN32_2/inc;/Applications/Simplicity Studio.app/Content
+                    -s/Eclipse/developer/sdks/8051/v4.0.3//Device/shared/si8051base;/Applications/Simplicity Studio.app/Contents/Eclipse/deve
+                    -loper/sdks/8051/v4.0.3//Device/EFM8BB3/inc) PRINT(.\src/EFM8BB31F64G-B-QFN32_2_main.lst) COND PAGEWIDTH(120) PAGELENGTH(
+                    -65) OBJECT(.\src/EFM8BB31F64G-B-QFN32_2_main.OBJ)
+
+line level    source
+
+   1          //-----------------------------------------------------------------------------
+   2          // Includes
+   3          //-----------------------------------------------------------------------------
+   4          #include <SI_EFM8BB3_Register_Enums.h>                  // SFR declarations
+   5          #include "InitDevice.h"
+   6          // $[Generated Includes]
+   7          // [Generated Includes]$
+   8          
+   9          SI_SBIT(LED0, SFR_P1, 4);
+  10          SI_SBIT(LED1, SFR_P1, 5);
+  11          SI_SBIT(LED2, SFR_P1, 6);
+  12          SI_SBIT(SW0, SFR_P0, 2);
+  13          SI_SBIT(SW1, SFR_P0, 3);
+  14          SI_SBIT(InA, SFR_P1, 0);
+  15          SI_SBIT(InB, SFR_P1, 1);
+  16          SI_SBIT(InC, SFR_P1, 2);
+  17          SI_SBIT(InD, SFR_P1, 3);
+  18          SI_SBIT(OpA, SFR_P2, 0);
+  19          SI_SBIT(OpB, SFR_P2, 1);
+  20          SI_SBIT(Pu, SFR_P0, 7);
+  21          
+  22          //-----------------------------------------------------------------------------
+  23          // main() Routine
+  24          // ----------------------------------------------------------------------------
+  25          int main(void) {
+  26   1              // Call hardware initialization routine
+  27   1              unsigned long i;
+  28   1      
+  29   1              unsigned long c=10000;
+  30   1              enter_DefaultMode_from_RESET();
+  31   1              InA = 0;
+  32   1              InB = 0;
+  33   1              InC = 0;
+  34   1              InD = 0;
+  35   1              OpA = 1;
+  36   1              OpB = 0;
+  37   1              while (1) //infinite loop
+  38   1              {
+  39   2      
+  40   2                      Pu = 0;
+  41   2                      LED0 = 1;
+  42   2                      for (i = 0; i < c; i++) {
+  43   3                              for (i = 0; i < c; i++){
+  44   4                              _nop_();
+  45   4                      }}
+  46   2      
+  47   2      
+  48   2      
+  49   2                      LED0=0;
+  50   2      
+C51 COMPILER V9.53.0.0   EFM8BB31F64G_B_QFN32_2_MAIN                                       03/27/2017 23:40:43 PAGE 2   
+
+  51   2                      Pu = 1;
+  52   2      
+  53   2                      for (i = 0; i < c; i++) {
+  54   3      
+  55   3                              for (i=0;i<c;i++){
+  56   4      
+  57   4                              _nop_();
+  58   4                      }}
+  59   2      
+  60   2      
+  61   2      
+  62   2              }
+  63   1      }
+  64          // $[Generated Run-time code]
+  65          // [Generated Run-time code]$
+  66          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    255    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       8
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
