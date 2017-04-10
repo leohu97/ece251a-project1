@@ -49,6 +49,7 @@ Main:
             ; Set Display Enable pin to Board Controller driven
             clr   DISP_EN
 			;red 1
+			lcall DEL
 			clr	RED_LED
 			lcall DEL
 			cpl RED_LED
