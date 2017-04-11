@@ -1,15 +1,6 @@
 $NOMOD51
 ;-----------------------------------------------------------------------------
-; SB1_blinky.ASM
-;-----------------------------------------------------------------------------
-;  TARGET MCU  :  EFM8SB1
-;  DESCRIPTION :  This program illustrates how to disable the watchdog timer,
-;                 configure the Crossbar, configure a port and write to a port
-;                 I/O pin.
-;
-; 	NOTES:
-;
-;-----------------------------------------------------------------------------
+
 
 $include (SI_EFM8BB3_Defs.inc)            ; Include register definition file.
 
