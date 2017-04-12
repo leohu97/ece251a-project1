@@ -1,0 +1,195 @@
+C51 COMPILER V9.53.0.0   MAIN                                                              04/11/2017 23:10:28 PAGE 1   
+
+
+C51 COMPILER V9.53.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\src/main.OBJ
+COMPILER INVOKED BY: Z:\Applications\Simplicity Studio.app\Contents\Eclipse\developer\toolchains\keil_8051\9.53\BIN\C51.
+                    -exe /Users/liaohu/SimplicityStudio/v4_workspace/EFM8BB3_FunctionGenerator/src/main.c OMF2 SMALL DEBUG OBJECTEXTEND ROM(L
+                    -ARGE) WARNINGLEVEL(2) FLOATFUZZY(3) OPTIMIZE(8,SPEED) DEFINE(DEBUG=1) INTVECTOR(0X0000) INTPROMOTE INCDIR(/Users/liaohu/
+                    -SimplicityStudio/v4_workspace/EFM8BB3_FunctionGenerator/inc/graphics;/Users/liaohu/SimplicityStudio/v4_workspace/EFM8BB3
+                    -_FunctionGenerator/inc;/Users/liaohu/SimplicityStudio/v4_workspace/EFM8BB3_FunctionGenerator/inc/config;/Applications/Si
+                    -mplicity Studio.app/Contents/Eclipse/developer/sdks/8051/v4.0.3//kits/common/bsp;/Applications/Simplicity Studio.app/Con
+                    -tents/Eclipse/developer/sdks/8051/v4.0.3//kits/EFM8BB3_SLSTK2022A/config;/Applications/Simplicity Studio.app/Contents/Ec
+                    -lipse/developer/sdks/8051/v4.0.3//Device/EFM8BB3/peripheral_driver/inc;/Applications/Simplicity Studio.app/Contents/Ecli
+                    -pse/developer/sdks/8051/v4.0.3//kits/common/drivers/efm8_joystick;/Applications/Simplicity Studio.app/Contents/Eclipse/d
+                    -eveloper/sdks/8051/v4.0.3//kits/common/drivers/efm8_memory_lcd/inc;/Applications/Simplicity Studio.app/Contents/Eclipse/
+                    -developer/sdks/8051/v4.0.3//kits/common/drivers/efm8_memory_lcd/inc/graphics;/Applications/Simplicity Studio.app/Content
+                    -s/Eclipse/developer/sdks/8051/v4.0.3//kits/common/drivers/efm8_memory_lcd/inc/config;/Applications/Simplicity Studio.app
+                    -/Contents/Eclipse/developer/sdks/8051/v4.0.3//Device/shared/si8051base;/Applications/Simplicity Studio.app/Contents/Ecli
+                    -pse/developer/sdks/8051/v4.0.3//Device/EFM8BB3/inc;/Applications/Simplicity Studio.app/Contents/Eclipse/developer/sdks/8
+                    -051/v4.0.3//kits/common/drivers/efm8_retargetserial) PRINT(.\src/main.lst) COND PAGEWIDTH(120) PAGELENGTH(65) OBJECT(.\s
+                    -rc/main.OBJ)
+
+line level    source
+
+   1          //-----------------------------------------------------------------------------
+   2          // main.c
+   3          //-----------------------------------------------------------------------------
+   4          // Copyright 2015 Silicon Laboratories, Inc.
+   5          // http://developer.silabs.com/legal/version/v11/Silicon_Labs_Software_License_Agreement.txt
+   6          //
+   7          // Program Description:
+   8          //
+   9          // Use scope to observe DAC outputs on P3.0 and P3.1.
+  10          // Move joystick left/right to change functions.
+  11          // Move joystick up/down to change frequency.
+  12          //
+  13          // Resources:
+  14          //   SYSCLK - 24.5 MHz HFOSC0 / 1
+  15          //   DAC0
+  16          //   DAC1
+  17          //   DAC2
+  18          //   DAC3
+  19          //   ADC0   - 10-bit, VREF = VDD (3.3 V)
+  20          //   SPI0   - 1 MHz
+  21          //   Timer2 - 2 MHz (SPI CS delay)
+  22          //   Timer3 - 1 kHz (1 ms tick)
+  23          //   Timer4 - 150 kHz interrupt (DAC update trigger)
+  24          //   P0.2   - Push button (kill splash screen)
+  25          //   P0.3   - Push button (kill splash screen)
+  26          //   P0.6   - SPI SCK
+  27          //   P1.0   - SPI MOSI
+  28          //   P1.7   - ADC input / Joystick (analog voltage divider)
+  29          //   P2.6   - SPI CS (Active High)
+  30          //   P3.0   - DAC0 output
+  31          //   P3.1   - DAC1 output
+  32          //   P3.4   - Display enable
+  33          //
+  34          //-----------------------------------------------------------------------------
+  35          // How To ms: EFM8BB3 STK
+  36          //-----------------------------------------------------------------------------
+  37          // 1) Place the switch in "AEM" mode.
+  38          // 2) Connect the EFM8BB3 STK board to a PC using a mini USB cable.
+  39          // 3) Compile and download code to the EFM8BB3 STK board.
+  40          //    In Simplicity Studio IDE, select Run -> Debug from the menu bar,
+  41          //    click the Debug button in the quick menu, or press F11.
+C51 COMPILER V9.53.0.0   MAIN                                                              04/11/2017 23:10:28 PAGE 2   
+
+  42          // 4) Run the code.
+  43          //    In Simplicity Studio IDE, select Run -> Resume from the menu bar,
+  44          //    click the Resume button in the quick menu, or press F8.
+  45          // 5) The Function Generator demo should start.
+  46          //    Press any button, move joystick, or wait 4 sec to kill splash screen
+  47          //    Use scope to observe DAC output on P3.0 and P3.1.
+  48          //    Move the joystick left/right to change functions.
+  49          //    Move the joystick up/down to increase/decrease the frequency.
+  50          //
+  51          // Target:         EFM8BB3
+  52          // Tool chain:     Generic
+  53          //
+  54          // Release 0.1 (ST)
+  55          //    - Initial Revision
+  56          //    - 15 JUL 2015
+  57          //
+  58          
+  59          /////////////////////////////////////////////////////////////////////////////
+  60          // Includes
+  61          /////////////////////////////////////////////////////////////////////////////
+  62          
+  63          #include "bsp.h"
+  64          #include "InitDevice.h"
+  65          #include "disp.h"
+  66          #include "function_generator.h"
+  67          #include "render.h"
+  68          #include  <stdio.h>
+  69          
+  70          
+  71          //---------------------------------------------------------------------------
+  72          // main() Routine
+  73          // --------------------------------------------------------------------------
+  74          int main(void)
+  75          {
+  76   1              static SI_SEGMENT_VARIABLE(line[16]=0, uint8_t, RENDER_LINE_SEG);
+  77   1              int y;
+  78   1              int z;
+  79   1              int a;
+  80   1              int b;
+  81   1              int c;
+  82   1              int d;
+  83   1              int e;
+  84   1              int f;
+  85   1              long t;
+  86   1              int time=1730;
+  87   1      char timer[9];
+  88   1      
+  89   1      
+  90   1      timer[8]=0;
+  91   1      timer[2]=58;
+  92   1      timer[5]=46;
+  93   1              enter_DefaultMode_from_RESET();
+  94   1        // Enable all interrupts
+  95   1        IE_EA = 1;
+  96   1        DISP_Init();
+  97   1        while (1){
+  98   2      
+  99   2                DISP_ClearLine(50,0xFF);
+ 100   2                DISP_ClearLine(60,0xFF);
+ 101   2      
+ 102   2      
+ 103   2        for(a=0;a<10;a++)
+ 104   2                {
+C51 COMPILER V9.53.0.0   MAIN                                                              04/11/2017 23:10:28 PAGE 3   
+
+ 105   3               timer[0]=a+48;
+ 106   3               for(b=0;b<10;b++)
+ 107   3                       {
+ 108   4                       timer[1]=b+48;
+ 109   4                       for(c=0;c<6;c++)
+ 110   4                               {
+ 111   5                               timer[3]=c+48;
+ 112   5                               for(d=0;d<10;d++)
+ 113   5                                       {
+ 114   6                                       timer[4]=d+48;
+ 115   6                                       for(e=0;e<10;e++)
+ 116   6                                               {
+ 117   7                                               timer[6]=e+48;
+ 118   7                                               for(f=0;f<10;f++)
+ 119   7                                                       {
+ 120   8                                                       timer[7]=f+48;
+ 121   8                                                       for (y = 0; y < FONT_HEIGHT; y++)
+ 122   8                                                               {
+ 123   9                                                               RENDER_StrLine(line, 30, y, timer);
+ 124   9                                                               DISP_WriteLine(4+y, line);
+ 125   9                                                               }
+ 126   8      
+ 127   8                                                               for(t=0;t<time;t++)
+ 128   8                                                               {
+ 129   9                                                               _nop_;
+*** WARNING C275 IN LINE 129 OF /Users/liaohu/SimplicityStudio/v4_workspace/EFM8BB3_FunctionGenerator/src/main.c: expres
+             -sion with possibly no effect
+ 130   9                                                               }
+ 131   8                                                       }
+ 132   7                                                       }
+ 133   6                                               }
+ 134   5                                       }
+ 135   4                               }
+ 136   3                       }
+ 137   2        }
+ 138   1      }
+*** WARNING C280 IN LINE 78 OF /Users/liaohu/SimplicityStudio/v4_workspace/EFM8BB3_FunctionGenerator/src/main.c: 'z': un
+             -referenced local variable
+ 139          
+ 140          
+ 141          
+ 142          
+ 143          
+ 144          
+ 145          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    356    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =     16    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      31
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  2 WARNING(S),  0 ERROR(S)
