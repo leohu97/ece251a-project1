@@ -17,17 +17,17 @@ DISP_EN      equ   P2.7                    ; Display Enable:
 
 JMP Main;jump to main function
             ; Simple delay loop.
-DEL: MOV R5,#40
-DEL1: MOV R6,#100
-DEL2: MOV R7,#99
-DEL3: DJNZ R7,DEL3
-	  DJNZ R6,DEL2
-	  DJNZ R5,DEL1
-	RET
+DEL: mov R5,#40
+DEL1: mov R6,#100
+DEL2: mov R7,#99
+DEL3: djnz R7,DEL3
+	  djnz R6,DEL2
+	  djnz R5,DEL1
+	ret
 
 Main:
-            ; Disable the WDT.
-            anl   PCA0MD, #NOT(040h)      ; clear Watchdog Enable bit
+	    ;reset watchdog
+            mov		wdtcn,#0xA5      ; clear Watchdog Enable bit
 
             ; Enable the Port I/O Crossbar
             orl   P1SKIP, #02h            ; skip LED pin in crossbar
